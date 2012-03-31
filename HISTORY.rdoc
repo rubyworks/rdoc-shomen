@@ -1,0 +1,10 @@
+= RELEASE HISTORY
+
+== 2012-04-31
+
+This is the first release of rdoc-shoment.
+
+Changes:
+
+* Happy first release day!
+

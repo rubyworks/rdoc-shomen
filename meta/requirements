@@ -1,0 +1,8 @@
+---
+- shomen
+- rdoc 3+
+- qed     (test)
+- ae      (test)
+- detroit (build)
+- reap    (build)
+

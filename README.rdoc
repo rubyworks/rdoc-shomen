@@ -1,0 +1,4 @@
+= Shomen RDoc Generator
+
+This is the old-school Shomen generator for RDoc.
+

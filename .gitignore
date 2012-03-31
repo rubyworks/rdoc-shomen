@@ -1,0 +1,10 @@
+.rdoc_options
+.reap/digest
+.yardoc
+doc
+log
+pkg
+tmp
+web
+work/sandbox/.yardoc
+work/sandbox/.rdoc

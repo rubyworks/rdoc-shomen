@@ -1,0 +1,4 @@
+RDoc-Shomen is an RDoc generator plugin that can be used to generate Shomen
+documentation. This is an alternative to the shomen command line tool which
+use the `.rdoc` cache to generate a shomen document. In contrast the rdoc-shomen
+generator operates as a traditional rdoc plugin.
