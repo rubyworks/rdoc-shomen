@@ -1,0 +1,30 @@
+---
+email:
+  service : Email
+  mailto  : 
+    - ruby-talk@ruby-lang.org
+    - rubyworks-mailinglist@googlegroups.com
+
+github:
+  gh_pages: web
+
+gem:
+  active : true
+
+dnote:
+  labels: ~
+  title: Source Notes
+  output: log/notes.html
+
+locat:
+  active: false
+  output: log/locat.html
+
+vclog:
+  output:
+    - log/history.rdoc
+    - log/changes.rdoc
+
+mast:
+  active: true
+
