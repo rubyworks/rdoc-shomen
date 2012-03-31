@@ -1,1 +1,524 @@
-My GitHub Page
+<html>
+<head>
+  <title>API</title>
+  <!-- -->
+  <link rel="stylesheet" href="assets/stylesheets/normalize.css" />
+
+  <!-- Provides JQuery framework. -->
+  <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+
+  <!-- Provides history system. -->
+  <script src="assets/javascripts/jquery.history.js"></script>
+
+  <!-- Provides templating system. -->
+  <script src="assets/javascripts/jquery.jqote2.min.js"></script>
+
+  <!-- Provides search filtering. -->
+  <script src="assets/javascripts/quicksearch.js"></script>
+
+  <!-- Provides rdoc support. -->
+  <script src="assets/javascripts/rundown.js"></script>
+
+  <!-- Provides markdown support. -->
+  <script src="assets/javascripts/hypervisor.js"></script>
+
+  <!-- Provides syntax highlighting support. -->
+  <script src="http://yandex.st/highlightjs/6.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="http://yandex.st/highlightjs/6.0/styles/default.min.css">
+
+  <!-- Provides keyboard shortcuts. -->
+  <script src="assets/javascripts/keymaster.js"></script>
+
+  <!-- -->
+  <script>
+    var documentation;
+    var documentation_by_id = {};
+    var converter = new Rundown.converter();  /* TODO: support other formats */
+
+    $(document).ready(function(){
+      HyperVisor.bootup();               // initialize app
+    });
+
+    //hljs.tabReplace = '  ';
+    //hljs.initHighlightingOnLoad();
+  </script>
+
+  <!-- Provides the slider/mousewheel widget.
+  <scrip src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script>
+  -->
+  <script src="assets/javascripts/jquery.mousewheel.min.js"></script>
+
+  <!--  -->
+  <link rel="stylesheet" href="assets/stylesheets/customize.css" />
+</head>
+
+<body>
+  <div id="header">
+    <div id="header-resources">
+    </div>
+
+    <div id="header-title">
+    </div>
+
+    <script type="text/x-jqote-template" id="template-header-title">
+      <![CDATA[
+        <h1><%= this.title %></h1>
+        <h2><%= this.summary || '' %></h2>
+      ]]>
+    </script>
+
+    <script type="text/x-jqote-template" id="template-header-resources">
+      <![CDATA[
+        <div>
+        <% for(label in this.resources) { %>
+          <a href="<%= this.resources[label] %>"><%= label %></a>
+        <% }; %>
+        </div>
+        <div style="margin-top: 1em;">
+          <button onclick="$('#raw').toggle();">metadata</button>&nbsp;
+        </div>
+      ]]>
+    </script>
+
+    <br style="clear: both;" />
+  </div>
+
+  <div id="ribbon">
+    <table width="100%">
+    <tr>
+      <th>Search</th>
+      <td>
+        <div id="search-field">
+          <input id="search-input"  type="text" value="" />
+          <input id="search-letter" type="hidden" value="" style="width: 1.5em;" /> &nbsp;
+          <span id="abctabs">
+
+            <script type="text/x-jqote-template" id="template-abctabs">
+              <![CDATA[
+                <% abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; %>
+                <% for (i=0;i<=25;i++) { %>
+                  <button class="letter" onclick="HyperVisor.clickABCTab('<%= abc[i] %>');"><%= abc[i] %></button>
+                <% } %>
+                <button id="clear-button" class="letter" onclick="HyperVisor.clickABCTab('');">(clear)</button>
+              ]]>
+            </script>
+
+          </span>
+        </div>
+      </td>
+    </tr> <tr>
+      <th style="width: 50px;">FILES</th>
+      <td>
+        <div id="f" class="slider scroll">
+          <ul id="file" class="slider items">
+
+            <script type="text/x-jqote-template" id="template-file-link">
+              <![CDATA[
+                <li>
+                  <a class="link" href="#<%= this.id %>"
+                      title="<%= this.path %>"
+                        alt="<%= this.path %>">
+                    <%= this.name %>
+                  </a>
+                </li>
+              ]]>
+            </script>
+
+          </ul>
+        </div>
+      </td>
+    </tr> <tr>
+      <th style="width: 50px;">CLASSES</th>
+      <td>
+        <div id="c" class="slider scroll">
+          <ul id="classes" class="slider items">
+
+            <script type="text/x-jqote-template" id="template-class-link">
+              <![CDATA[
+                <li>
+                  <a class="link" href="#<%= this.id %>"
+                      title="<%= this.path %>"
+                        alt="<%= this.path %>">
+                    <%= this.name %>
+                  </a>
+                </li>
+              ]]>
+            </script>
+
+            <script type="text/x-jqote-template" id="template-module-link">
+              <![CDATA[
+                <li>
+                  <a class="link" href="#<%= this.id %>"
+                      title="<%= this.path %>"
+                        alt="<%= this.path %>">
+                    <%= this.name %>
+                  </a>
+                </li>
+              ]]>
+            </script>
+
+          </ul>
+        </div>
+      </td>
+    </tr> <tr>
+      <th style="width: 50px;">METHODS</th>
+      <td>
+        <div id="m" class="slider scroll">
+          <ul id="methods" class="slider items">
+
+            <script type="text/x-jqote-template" id="template-method-link">
+              <![CDATA[
+                <li>
+                  <a class="link" href="#<%= this.id %>"
+                      title="<%= this.key %>"
+                        alt="<%= this.key %>">
+                    <%= this.name.escapeHTML() %>
+                  </a>
+                </li>
+              ]]>
+            </script>
+
+          </ul>
+        </div>
+      </td>
+    </tr>
+    </table>
+  </div>
+
+  <div id="infobox">
+
+    <script type="text/x-jqote-template" id="template-document-info">
+      <![CDATA[
+        <div class="box" id="<%= this.id %>" style="display: none;">
+          <div style="float: right">
+            <button class="link" onclick="$('#<%= this.id %>').hide();">X</button>
+          </div>
+          <div class="info-heading">
+            <h2><%= this['!'] %></h2>
+            <h1><%= this.path %> <!-- <%= this.name %> --> </h1>
+            <h3><%= this.modified %></h3>
+          </div>
+          <div class="info-content">
+            <% if (this.text == undefined){ %>
+            <% } else { %>
+              <%= converter.makeHtml(this.text) %>
+            <% } %>
+          </div>
+        </div>
+      ]]>
+    </script>
+
+    <script type="text/x-jqote-template" id="template-script-info">
+      <![CDATA[
+        <div class="box" id="<%= this.id %>" style="display: none;">
+          <div style="float: right">
+            <button class="link" onclick="$('#<%= this.id %>').hide();">X</button>
+          </div>
+          <div class="info-heading">
+            <h2><%= this['!'] %></h2>
+            <h1><%= this.path %></h1>
+            <h3><%= this.modified %></h3>
+          </div>
+          <div class="info-content">
+            <% if (this.uri != null) { %>
+              <div class="scm-uri">
+                <a target="_blank" href="<%= this.uri %>">Click here to view source code via repository</a>.
+              </div>
+            <% } %>
+
+            <% if (this.source != null) { %>
+              <pre class="script"><code><%= this.source.escapeHTML() %></code></pre>
+            <% } %>
+          </div>
+        </div>
+      ]]>
+    </script>
+
+    <script type="text/x-jqote-template" id="template-constant-info">
+      <![CDATA[
+        <div class="box" id="<%= this.id %>" style="display: none;">
+          <div style="float: right">
+            <button class="link" onclick="$('#<%= this.id %>').hide();">X</button>
+          </div>
+          <div class="info-heading">
+            <h2><%= this['!'] %></h2>
+            <h1>
+              <span class="fade"><%= this.namespace %></span>::<%= this.name %>
+              <span class="fade"></span>
+            </h1>
+            <h3></h3>
+          </div>
+          <div class="info-content">
+            <p><%= converter.makeHtml(this.value) %></p>
+          </div>
+          <br style="clear: both;" />
+        </div>
+      ]]>
+    </script>
+
+    <script type="text/x-jqote-template" id="template-module-info">
+      <![CDATA[
+        <div class="box" id="<%= this.id %>" style="display: none;">
+          <div style="float: right">
+            <button class="link" onclick="$('.class-breakdown').toggle();">Detail</button>
+            <button class="link" onclick="$('#<%= this.id %>').hide();">X</button>
+          </div>
+          <div class="info-heading">
+            <h2><%= this['!'] %></h2>
+            <h1>
+              <span class="fade"><%= this.namespace %></span>::<%= this.name %>
+              <span class="fade"></span>
+            </h1>
+            <h3></h3>
+          </div>
+          <div class="class-breakdown" style="float:left;">
+            <%= $('#template-detail').jqote(this) %>
+          </div>
+          <div class="info-content">
+            <p><%= converter.makeHtml(this.comment) %></p>
+          </div>
+          <br style="clear: both;" />
+        </div>
+      ]]>
+    </script>
+
+    <script type="text/x-jqote-template" id="template-class-info">
+      <![CDATA[
+        <div class="box" id="<%= this.id %>" style="display: none;">
+          <div style="float: right">
+            <button class="link" onclick="$('.class-breakdown').toggle();">Detail</button>
+            <button class="link" onclick="$('<%= this.id %>').hide();">X</button>
+          </div>
+          <div class="info-heading">
+            <h2><%= this['!'] %></h2>
+            <h1>
+              <span class="fade"><%= this.namespace %></span>::<%= this.name %>
+              <span class="fade">&lt; <%= this.superclass || 'Object' %></span>
+            </h1>
+            <h3></h3>
+          </div>
+          <div class="class-breakdown" style="float:left;">
+            <%= $('#template-detail').jqote(this) %>
+          </div>
+          <div class="info-content">
+            <p><%= converter.makeHtml(this.comment) %></p>
+          </div>
+          <br style="clear: both;" />
+        </div>
+      ]]>
+    </script>
+
+    <script type="text/x-jqote-template" id="template-detail">
+      <![CDATA[
+        <table style="border:0; float: left; margin: 0 0 1em 0;">
+          <tr>
+            <th>Class</th>
+            <th>Instance</th>
+          </tr>
+          <tr>
+            <td>
+              <ul> <!-- TODO: rename to extensions -->
+              <% for(i in this.extensions) { %>
+                <% target = documentation[this.extensions[i]] || {}; %>
+                <li>
+                  <a href="#<%= target.id %>">
+                    <%= target.key %>
+                  <a>
+                </li>
+              <% } %>
+              </ul>
+            </td>
+            <td>
+              <ul>
+              <% for(i in this.includes) { %>
+                <% target = documentation[this.includes[i]]; %>
+                <li>
+                  <% if (target != null) { %>
+                    <a href="#<%= target.id %>">
+                      <%= target.name %>
+                    <a>
+                  <% } else { %>
+                    <a style="color: #888;">  <!-- TODO: use a css class -->
+                      <%= this.includes[i] %>
+                    </a> 
+                  <% } %>
+                </li>
+              <% } %>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <ul>
+              <% for(i in this.accessors) { %>
+                <% target = documentation[this.accessors[i]] || {}; %>
+                <% if (target.singleton == true) { %>
+                  <li>
+                    <a href="#<%= target.id %>">
+                      <%= target.name %>
+                    <a>
+                  </li>
+                <% } %>
+              <% } %>
+              </ul>
+            </td>
+            <td>
+              <ul>
+              <% for(i in this.accessors) { %>
+                <% target = documentation[this.accessors[i]] || {}; %>
+                <% if (target.singleton == false) { %>
+                  <li>
+                    <a href="#<%= target.id %>">
+                      <%= target.name %>
+                    <a>
+                  </li>
+                <% } %>
+              <% } %>
+              </ul>
+            </td>
+          </tr><tr>
+            <td>
+              <ul>
+              <% for(i in this.methods) { %>
+                <% target = documentation[this.methods[i]] || {}; %>
+                <% if (target.singleton == true) { %>
+                  <li>
+                    <a href="#<%= target.id %>">
+                      <%= target.name %>
+                    </a>
+                  </li>
+                <% } %>
+              <% } %>
+              </ul>
+            </td>
+            <td>
+              <ul>
+              <% for(i in this.methods) { %>
+                <% target = documentation[this.methods[i]] || {}; %>
+                <% if (target.singleton == false) { %>
+                  <li>
+                    <a href="#<%= target.id %>">
+                      <%= target.name %>
+                    </a>
+                  </li>
+                <% } %>
+              <% } %>
+              </ul>
+            </td>
+          </tr>
+        </table>
+        <table style="border: 0; float: left; padding: 0; margin: 0 0 0 1em;">
+          <tr>
+            <th>Constants</th>
+          </tr>
+          <tr>
+            <td>
+              <ul>
+              <% for(i in this.constants) { %>
+                <% target = documentation[this.constants[i]] || {}; %>
+                <li>
+                  <a href="#<%= target.id %>">
+                    <%= target['name'] %>
+                  <a>
+                </li>
+              <% } %>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="3">In Scripts</th>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <ul>  <!-- TODO: remove line, e.g. `:7` from files[i] -->
+              <% for(i in this.files) { %>
+                <% target = documentation[this.files[i]] || {}; %>
+                <li>
+                  <a href="#<%= target.id %>">
+                    <%= target.path %>
+                  <a>
+                </li>
+              <% } %>
+              </ul>
+            </td>
+          </tr>
+        </table>
+      ]]>
+    </script>
+
+    <script type="text/x-jqote-template" id="template-method-info">
+      <![CDATA[
+        <div class="box" id="<%= this.id %>" style="display: none;">
+          <div style="float: right">
+            <button class="link" onclick="$('#<%= this.id %>').hide();">X</button>
+          </div>
+          <div class="info-heading">
+            <h2><%= this['!'] %></h2>
+              <h1><span class="fade"><%= this.namespace %></span>#<%= this.name %><h1>
+            <h3></h3>
+          </div>
+          <div class="info-content">
+            <p><%= converter.makeHtml(this.comment) %></p>
+          </div>
+        </div>
+      ]]>
+    </script>
+
+    <script type="text/x-jqote-template" id="template-attribute-info">
+      <![CDATA[
+        <div class="box" id="<%= this.id %>" style="display: none;">
+          <div style="float: right">
+            <button class="link" onclick="$('#<%= this.id %>').hide();">X</button>
+          </div>
+          <div class="info-heading">
+            <h2><%= this['!'] %> (<%= this.rw %>)</h2>
+              <h1><span class="fade"><%= this.namespace %></span>#<%= this.name %><h1>
+            <h3></h3>
+          </div>
+          <div class="info-content">
+            <p><%= converter.makeHtml(this.comment) %></p>
+          </div>
+        </div>
+      ]]>
+    </script>
+
+<!--
+    <script type="text/x-jqote-template" id="template-class-method-info">
+      <![CDATA[
+        <div class="box" id="<%= this.id %>" style="display: none;">
+          <div style="float: right">
+            <button class="link" onclick="$('#<%= this.id %>').hide();">X</button>
+          </div>
+          <div class="info-heading">
+            <h2><%= this['!'] %></h2>
+              <h1><span class="fade"><%= this.namespace %></span>.<%= this.name %><h1>
+            <h3></h3>
+          </div>
+          <div class="info-content">
+            <p><%= converter.makeHtml(this.comment) %></p>
+          </div>
+        </div>
+      ]]>
+    </script>
+-->
+
+    <div id="raw" class="box">
+      <div class="right-floating-horizontal-menu">
+        <button onclick="HyperVisor.viewMeta();">Detail</button>
+        <button onclick="$('#raw').hide();"">X</button> <!-- Rawhide! (whipcrack!) -->
+      </div>
+      <h2>doc.json</h2>
+    </div>
+  </div>
+
+  <div id="footer">
+    <spv id="copyrights"></span>
+
+    <script type="text/x-jqote-template" id="template-copyright">
+      Copyright <%= this.year %> <%= this.holder %>
+    </script>
+
+    Website generated with <a href="http://rubyworks.github.com/hypervisor">Hypervisor</a>.
+  </div>
+</body>
+</html>
