@@ -467,11 +467,7 @@ protected
       model.created   = File.ctime(absolute_path)
       model.modified  = File.mtime(absolute_path)
 
-      # http://github.com/rubyworks/qed/blob/master/ lib/qed.rb
-
-      # TODO: Add option to rdoc command line tool instead of using ENV.
-
-      if ENV['source']
+      if options.source
         model.source   = File.read(absolute_path) #file.comment
         model.language = mime_type(absolute_path)
       end

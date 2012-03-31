@@ -1,4 +1,40 @@
 = Shomen RDoc Generator
 
+{Homepage}[http://rubyworks.github.com/rdoc-shomen] /
+{Report Issue}[http://github.com/rubyworks/rdoc-shomen/issues] /
+{Source Code}[http://github.com/rubyworks/rdoc-shomen] /
+{Mailing List}[http://google.groups.com/groups/rubyworks-mailinglist]
+
+
+== Description
+
 This is the old-school Shomen generator for RDoc.
+
+
+== Instruction
+
+Use the shomen generator like any other RDoc generator.
+
+  $ rdoc -f shomen -m README.rdoc lib [A-Z]*.*
+
+The shomen document will be saved to the output directory (default `doc`)
+as wither `doc.json` or as `<name>-<version>.json` if project metadata is
+discoverable.
+
+The generator supports a couple of special options:
+
+* `--yaml` option will save the file to YAML format instead of JSON.
+* `--source` will include full source code in script entries.
+
+The `--source` option is not recommended for documentation that will
+be served online as it will make the documation file rather large.
+
+
+== Copyrights
+
+Copyright (c) 2011 Rubyworks. All rights reserved.
+
+RDoc Shomen is distributable in accordance with the *BSD-2-Clause* license.
+
+See LICENSE.txt file for details.
 
