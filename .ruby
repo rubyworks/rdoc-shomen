@@ -6,6 +6,7 @@ authors:
   email: transfire@gmail.com
 copyrights: []
 requirements:
+- name: shomen
 - name: rdoc
   version: 3+
 - name: qed
