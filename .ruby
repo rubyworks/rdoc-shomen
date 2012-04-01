@@ -10,21 +10,15 @@ copyrights:
   license: BSD-2-Clause
 requirements:
 - name: shomen
-- name: rdoc
-  version: 3+
-- name: qed
+- name: citron
   groups:
   - test
   development: true
-- name: ae
-  groups:
-  - test
-  development: true
-- name: detroit
+- name: reap
   groups:
   - build
   development: true
-- name: reap
+- name: detroit-commons
   groups:
   - build
   development: true
