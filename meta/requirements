@@ -1,8 +1,6 @@
 ---
 - shomen
-- rdoc 3+
-- qed     (test)
-- ae      (test)
-- detroit (build)
+- citron  (test)
 - reap    (build)
+- detroit-commons (build)
 

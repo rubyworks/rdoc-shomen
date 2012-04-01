@@ -3,6 +3,8 @@
 lib/rdoc/discover.rb
 lib/rdoc/generator/shomen.rb
 lib/rdoc/generator/shomen_extensions.rb
+test/case_specification.rb
+test/fixture/doc/doc.json
 HISTORY.rdoc
 LICENSE.txt
 README.rdoc
