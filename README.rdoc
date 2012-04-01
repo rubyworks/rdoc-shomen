@@ -5,6 +5,8 @@
 {Source Code}[http://github.com/rubyworks/rdoc-shomen] /
 {Mailing List}[http://google.groups.com/groups/rubyworks-mailinglist]
 
+{<img src="https://secure.travis-ci.org/rubyworks/rdoc-shomen.png" />}[http://travis-ci.org/rubyworks/rdoc-shomen]
+
 
 == Description
 
