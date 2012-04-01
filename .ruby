@@ -4,7 +4,10 @@ source:
 authors:
 - name: trans
   email: transfire@gmail.com
-copyrights: []
+copyrights:
+- holder: Rubyworks
+  year: '2011'
+  license: BSD-2-Clause
 requirements:
 - name: shomen
 - name: rdoc
