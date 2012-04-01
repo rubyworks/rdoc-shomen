@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+Test.run :default do |run|
+  run.files << 'test/case_*.rb'
+end
+

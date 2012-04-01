@@ -1,13 +1,16 @@
 require 'citron'
-#require 'ae'
+require 'brass'
+require 'json'
 
 testcase "Document conforms to specificaiton" do
 
   # IMPORTANT! For now we need to hand create this document.
-  fixture_document = 'test/fixture/doc/doc.json'
+  FIXTURE_DOCUMENT = 'test/fixture/doc/doc.json'
 
-  before :all do
-    @doc = JSON.load(File.new(fixture_document))
+  def initialize(*a,&b)
+    super(*a,&b)
+
+    @doc = JSON.load(File.new(FIXTURE_DOCUMENT))
   end
 
   test "(metadata)" do
