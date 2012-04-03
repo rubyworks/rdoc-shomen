@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+ignore 'work', '.yardoc', 'doc', 'log', 'pkg', 'tmp', 'web'
+
+desc "run tests"
+task "test" do
+  cmd = "rubytest"
+  sh cmd
+end
+
+task "test:cov" do
+  cmd = "test -p cov"
+  sh cmd
+end
+
