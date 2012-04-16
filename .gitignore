@@ -1,9 +1,9 @@
+.fire/digest
 .rdoc_options
-.reap/digest
 .yardoc
 doc
 log
-pkg
+pkg/*.gem
 tmp
 web
 work/sandbox/.yardoc

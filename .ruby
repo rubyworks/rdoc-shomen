@@ -30,11 +30,21 @@ repositories:
   scm: git
   name: upstream
 resources:
-  home: http://rubyworks.github.com/rdoc-shomen
-  docs: http://rubydoc.info/gems/rdoc-shoment
-  code: http://github.com/rubyworks/rdoc-shomen
-  bugs: http://github.com/rubyworks/rdoc-shomen/issues
-  mail: http://groups.google.com/groups/rubyworks-mailinglist
+- uri: http://rubyworks.github.com/rdoc-shomen
+  name: home
+  type: home
+- uri: http://rubydoc.info/gems/rdoc-shoment
+  name: docs
+  type: doc
+- uri: http://github.com/rubyworks/rdoc-shomen
+  name: code
+  type: code
+- uri: http://github.com/rubyworks/rdoc-shomen/issues
+  name: bugs
+  type: bugs
+- uri: http://groups.google.com/groups/rubyworks-mailinglist
+  name: mail
+  type: mail
 extra: {}
 load_path:
 - lib
@@ -53,4 +63,4 @@ description: ! 'RDoc-Shomen is an RDoc generator plugin that can be used to gene
 
   generator operates as a traditional rdoc plugin.'
 organization: rubyworks
-date: '2012-03-31'
+date: '2012-04-16'
