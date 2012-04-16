@@ -9,7 +9,7 @@ github:
   gh_pages: web
 
 gem:
-  active : true
+  gemspec: pkg/rdoc-shomen.gemspec
 
 dnote:
   labels: ~

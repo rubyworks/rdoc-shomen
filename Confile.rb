@@ -1,6 +1,5 @@
-config :rubytest do |test|
-  test.run :default do |r|
-    r.files < 'test/case_*.rb'
-  end
+
+config :rubytest do |run|
+  run.files < 'test/case_*.rb'
 end
 
