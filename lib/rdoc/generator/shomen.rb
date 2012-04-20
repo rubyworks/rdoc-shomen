@@ -3,13 +3,11 @@ require 'pathname'
 require 'yaml'
 require 'json'
 
+require 'shomen-model'
+
 require 'rdoc/rdoc'
 require 'rdoc/generator'
 require 'rdoc/generator/markup'
-
-require 'shomen/metadata'
-require 'shomen/model'  # TODO: have metadata in model
-
 require 'rdoc/generator/shomen_extensions'
 
 # Shomen Adaptor for RDoc utilizes the rdoc tool to parse ruby source code
@@ -234,7 +232,7 @@ protected
       model.path      = rdoc.parent.full_name + '::' + rdoc.name
       model.name      = rdoc.name
       model.namespace = rdoc.parent.full_name
-      model.comment   = rdoc.comment.text
+      model.comment   = comment(rdoc.comment)
       model.format    = 'rdoc'
       model.value     = rdoc.value
       model.files     = ["/#{rdoc.file.full_name}"]
@@ -261,7 +259,7 @@ protected
       model.namespace        = rdoc_class.full_name.split('::')[0...-1].join('::')
       model.includes         = rdoc_class.includes.map{ |x| x.name }  # FIXME: How to "lookup" full name?
       model.extensions       = []                                     # TODO:  How to get extensions?
-      model.comment          = rdoc_class.comment.to_s #text
+      model.comment          = comment(rdoc_class.comment)
       model.format           = 'rdoc'
       model.constants        = rdoc_class.constants.map{ |x| complete_name(x.name, rdoc_class.full_name) }
       model.modules          = rdoc_class.modules.map{ |x| complete_name(x.name, rdoc_class.full_name) }
@@ -311,7 +309,7 @@ protected
       model.path        = method_name(rdoc_method)
       model.name        = rdoc_method.name
       model.namespace   = rdoc_method.parent_name
-      model.comment     = rdoc_method.comment.text
+      model.comment     = comment(rdoc_method.comment)
       model.format      = 'rdoc'
       model.aliases     = rdoc_method.aliases.map{ |a| method_name(a) }
       model.alias_for   = method_name(rdoc_method.is_alias_for)
@@ -375,7 +373,7 @@ protected
       #  'path'         => full_name,
       #  'name'         => m.name,
       #  'namespace'    => m.parent_name,
-      #  'comment'      => m.comment.text,
+      #  'comment'      => comment(m.comment),
       #  'access'       => m.visibility.to_s,
       #  'rw'           => m.rw,  # TODO: better name ?
       #  'singleton'    => m.singleton,
@@ -440,7 +438,7 @@ protected
       model.name     = File.basename(absolute_path)
       model.created  = File.mtime(absolute_path)
       model.modified = File.mtime(absolute_path)
-      model.text     = File.read(absolute_path) #file.comment
+      model.text     = File.read(absolute_path) #comment(file.comment)
       model.format   = mime_type(absolute_path)
 
       @table['/'+model.path] = model.to_h
@@ -468,7 +466,7 @@ protected
       model.modified  = File.mtime(absolute_path)
 
       if options.source
-        model.source   = File.read(absolute_path) #file.comment
+        model.source   = File.read(absolute_path) #comment(file.comment)
         model.language = mime_type(absolute_path)
       end
 
@@ -573,6 +571,16 @@ protected
       else          tab = "* "
     end
     $stderr.puts(tab + msg)
+  end
+
+  #
+  def comment(rdoc_comment)
+    case rdoc_comment
+    when String
+      "" # something is wrong if this is a string
+    else
+      rdoc_comment.text
+    end
   end
 
 end
