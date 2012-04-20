@@ -52,7 +52,7 @@ revision: 0
 created: '2010-07-01'
 summary: RDoc Generator for Shomen Documentation Format
 title: RDoc Shomen
-version: 0.1.0
+version: 0.1.1
 name: rdoc-shomen
 description: ! 'RDoc-Shomen is an RDoc generator plugin that can be used to generate
   Shomen
