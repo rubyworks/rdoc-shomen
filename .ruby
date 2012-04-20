@@ -9,16 +9,12 @@ copyrights:
   year: '2011'
   license: BSD-2-Clause
 requirements:
-- name: shomen
+- name: shomen-model
 - name: citron
   groups:
   - test
   development: true
-- name: reap
-  groups:
-  - build
-  development: true
-- name: detroit-commons
+- name: detroit
   groups:
   - build
   development: true
